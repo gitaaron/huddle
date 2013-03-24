@@ -10,3 +10,16 @@ app.configure(function() {
 
 app.listen(8080);
 console.log('listening on 8080...');
+
+var io = io.listen(app)
+    , buffer = [];
+
+
+io.sockets.on('connection', function(client) {
+
+    client.send(JSON.stringify({buffer:buffer}));
+    client.on('message', function(message) {
+        console.log('message : '+message);
+    });
+
+});
