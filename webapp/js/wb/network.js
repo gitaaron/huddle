@@ -1,4 +1,3 @@
-var g_command, g_sent_command, g_obj;
 define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $, interaction, socket) {
 
 
@@ -27,8 +26,6 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $
 
         var self = this;
         socket.on('message', function(obj) {
-            console.log('msg');
-            g_obj = obj;
             obj = JSON.parse(obj);
             if('buffer' in obj) {
                 for (var i in obj.buffer) 
@@ -51,8 +48,6 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $
     }
 
     Network.prototype.drawCommand = function(c) {
-        console.log('drawCommand');
-        g_command = c;
 	if(c) {
                 if(c.p && c.p.length) {
 		    var node = this.saveDrawing.scaleNode(c, {width:$(window).width(),height:$(window).height()});
@@ -67,19 +62,14 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $
     }
 
     Network.prototype.sendCommand = function(origC) {
-        console.log('sendCommand');
         origC.wW = $(window).width();
         origC.wH = $(window).height();
         var c = $.extend(true, {}, origC);
 
 
         if(socket.socket.connected) {
-            console.log('sending1');
-            g_sent_command = c;
             socket.send(JSON.stringify({'command':c}));
-            console.log('sending2');
         } else {
-            console.log('queing');
             this.queued_send_commands.push(c);
         }
  
