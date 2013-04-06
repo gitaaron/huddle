@@ -1,4 +1,4 @@
-define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $, interaction, socket) {
+define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], function(exports, $, interaction, socket, tablet) {
 
 
     var socket = io.connect();
@@ -23,6 +23,7 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $
         interaction = interaction(canvasPainter.canvasInterface);
         interaction.bindDown(this.mouseDownActionPerformed.bindAsEventListener(this));
         interaction.bindUp(this.mouseUpActionPerformed.bindAsEventListener(this));
+        this.tablets = {};
 
         var self = this;
         socket.on('message', function(obj) {
@@ -35,6 +36,10 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $
             }
         });
 
+        socket.on('tablet_connect', function(obj) {
+            console.log('tablet_connect : ' + obj);
+            self.tablets[obj.sessionid] = new tablet('green', obj.wW, obj.wH);
+        });
     
     }
 
@@ -50,7 +55,13 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $
     Network.prototype.drawCommand = function(c) {
 	if(c) {
                 if(c.p && c.p.length) {
-		    var node = this.saveDrawing.scaleNode(c, {width:$(window).width(),height:$(window).height()});
+                    if(c.sessionid) {
+                        var tablet = this.tablets[c.sessionid];
+		        var node = this.saveDrawing.scaleNode(c, {width:tablet.windowWidth,height:tablet.windowHeight});
+                        node = this.saveDrawing.translateNode(node, tablet.getPosition());
+                    } else {
+		        var node = this.saveDrawing.scaleNode(c, {width:$(window).width(),height:$(window).height()});
+                    }
                 } else {
                     var node = c;
                 }
@@ -64,11 +75,13 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $
     Network.prototype.sendCommand = function(origC) {
         origC.wW = $(window).width();
         origC.wH = $(window).height();
+        origC.sessionid = socket.socket.sessionid;
         var c = $.extend(true, {}, origC);
 
 
+
         if(socket.socket.connected) {
-            socket.send(JSON.stringify({'command':c}));
+            socket.emit('command', JSON.stringify(c));
         } else {
             this.queued_send_commands.push(c);
         }
@@ -101,6 +114,21 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $
         while(this.queued_send_commands.length) {
             this.sendCommand(this.queued_send_commands.pop());
         }
+    }
+
+    Network.prototype.announceTabletConnect = function() {
+        socket.on('connect', function() {
+            console.log('announce tablet connect');
+            socket.emit('tablet_connect', {sessionid:socket.socket.sessionid, wW:$('.canvas').width(), wH:$('.canvas').height()});
+        });
+    }
+    
+    Network.prototype.announceScreenConnect = function() {
+        socket.on('connect', function() {
+            console.log('announce screen connect');
+            socket.emit('screen_connect', {sessionid:socket.socket.sessionid});
+           
+        });
     }
     
 });

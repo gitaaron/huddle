@@ -10,21 +10,31 @@ app.configure(function() {
     app.use(express.static(__dirname+'/../webapp'));
 });
 
+var screen;
+
 io.sockets.on('connection', function (socket) {
+    console.log('client connected');
     buffer = [];
-    socket.emit('news', { hello: 'world' });
-    socket.on('message', function(data) {
+    socket.on('command', function(data) {
         console.log('message');
         message = JSON.parse(data);
-        var msg = { command: message.command };
+        var msg = { command: message };
         buffer.push(msg);
         if (buffer.length > 20) buffer.shift();
         console.log('sending : ' + JSON.stringify(msg));
         socket.broadcast.send(JSON.stringify(msg));
     });
-    socket.on('my other event', function (data) {
-        console.log(data);
-        socket.broadcast.emit('my other event', data);
+    socket.on('tablet_connect', function (data) {
+        console.log('tablet_connect : ' +JSON.stringify(data));
+
+        exports.socket = socket;
+        if(screen) screen.emit('tablet_connect', data);
+        else console.log('no screen to tell');
+    });
+
+    socket.on('screen_connect', function(data) {
+        console.log('screen_connect');
+        screen = socket;
     });
 
 

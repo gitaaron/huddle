@@ -18,6 +18,8 @@ require.config({
 
 require(['jquery', 'wb/main'], function($, wb_main) {
 
-    new wb_main('canvas', 'canvasInterface');
+    var wb = new wb_main('canvas', 'canvasInterface');
+
+    wb.network.announceTabletConnect();
 
 });

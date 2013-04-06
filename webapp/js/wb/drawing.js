@@ -168,6 +168,7 @@ define(['exports', 'jquery'], function(exports, $) {
     }
 
     SaveDrawing.prototype.translateNode = function(node, translation) {
+        console.log('transNode x : ' + translation.x + ' y : ' + translation.y);
         var points = node.p;
         $.each(points, function(k,v) {
             node.p[k].x = v.x + translation.x;

@@ -5,6 +5,7 @@ define(['exports', 'wb/painter', 'wb/drawing', 'wb/resizer', 'wb/network'], func
 
             var saveDrawing = new drawing.SaveDrawing(canvasPainter);
             var cn = new network.Network(canvasPainter, saveDrawing);
+            this.network = cn;
             $('.'+canvasName).attr({
                 'width':$(window).width(),
                 'height':$(window).height()
