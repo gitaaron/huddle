@@ -3,6 +3,7 @@
     "description":"backend for communications",
     "version":"0.0.1",
     "dependencies":{
-        "express":"*"
+        "express":"*",
+        "socket.io":"*"
     }
 }

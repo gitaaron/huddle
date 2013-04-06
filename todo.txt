@@ -1,6 +1,6 @@
 # movable square
-    * create node project w/ socket.io
-    * clicking screen on one browser tab does console log on other and vice versa
+    * create node project w/ socket.io (DONE)
+    * clicking screen on one browser tab does console log on other and vice versa (DONE)
     * master/slave
         -> slave sends master coordinates and master draws a box
         -> slave can move box on master by clicking and dragging mouse
