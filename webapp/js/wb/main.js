@@ -2,6 +2,7 @@ define(['exports', 'wb/painter', 'wb/drawing', 'wb/resizer', 'wb/network'], func
 
     return function(canvasName, canvasInterfaceName) {
             var canvasPainter = new painter.CanvasPainter(canvasName, canvasInterfaceName);
+
             var saveDrawing = new drawing.SaveDrawing(canvasPainter);
             var cn = new network.Network(canvasPainter, saveDrawing);
             $('.'+canvasName).attr({
@@ -14,22 +15,9 @@ define(['exports', 'wb/painter', 'wb/drawing', 'wb/resizer', 'wb/network'], func
             });
 
             resizer.startListener(canvasPainter, saveDrawing);
-
+            canvasPainter.setLineWidth(5);
+            canvasPainter.setColor('rgba(255,0,0,0.8)');
         this.canvasPainter = canvasPainter;
-
-        /*
-        $('.canvas').bind('wasResized', function() {
-            canvasPainter.updateSize();
-            saveDrawing.rescaleNodes();
-            saveDrawing.paintDrawing();
-        });
-        $('#resizer').bind('click', function(e) {
-
-            canvasPainter.updateSize();
-            saveDrawing.rescaleNodes();
-            saveDrawing.paintDrawing();
-        });
-        */
 
         this.clear = function() {
             canvasPainter.clear(); 

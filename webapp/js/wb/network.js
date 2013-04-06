@@ -1,7 +1,7 @@
 define(['exports', 'jquery', 'wb/interaction', 'socket.io'], function(exports, $, interaction, socket) {
 
 
-    var socket = io.connect('http://localhost');
+    var socket = io.connect();
     
 
     /*
