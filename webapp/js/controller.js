@@ -12,14 +12,6 @@ define(['jquery.drag'], function(drag) {
 
             var elem = $('.controller');
 
-            /*
-            elem.bind('mousedown', function(ev, dd) {
-                console.log('dragstart');
-                self.lastX = 0;
-                self.lastY = 0;
-            });
-            */
-
             elem.bind('mousedown', function() {
                 console.log('start');
                 network.tabletEvent('start', {x:0, y:0});
