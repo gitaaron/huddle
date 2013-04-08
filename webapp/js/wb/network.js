@@ -40,6 +40,10 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
             console.log('tablet_connect : ' + obj);
             self.tablets[obj.sessionid] = new tablet('green', obj.wW, obj.wH);
         });
+
+        socket.on('tablet_event', function(obj) {
+            self.tablets[obj.sessionid].receiveEvent(obj);
+        });
     
     }
 
@@ -73,6 +77,7 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
     }
 
     Network.prototype.sendCommand = function(origC) {
+        if(!origC) return;
         origC.wW = $(window).width();
         origC.wH = $(window).height();
         origC.sessionid = socket.socket.sessionid;
@@ -130,5 +135,10 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
            
         });
     }
+
+    Network.prototype.tabletEvent = function(type, coords) {
+        socket.emit('tablet_event', {type:type, coords:coords, sessionid:socket.socket.sessionid});
+    }
+
     
 });

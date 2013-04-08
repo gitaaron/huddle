@@ -47,6 +47,10 @@ define(['exports', 'wb/interaction', 'jquery'], function(exports, interaction, $
         $(document).bind('canvasWasResized', function() {
             self.updateSize();
         });
+        var self = this;
+        $(document).bind('clear_canvas', function() {
+            self.clear();
+        });
         this.updateSize();
 
     }
@@ -203,6 +207,7 @@ define(['exports', 'wb/interaction', 'jquery'], function(exports, interaction, $
 
 
     CanvasPainter.prototype.clear = function() {
+
         this.setDrawAction(5);
     }
 
@@ -212,7 +217,7 @@ define(['exports', 'wb/interaction', 'jquery'], function(exports, interaction, $
             this.curDrawAction = action;
             this.callWidgetListeners();
             this.curDrawAction = lastAction;
-            this.clearCanvas(this.context, this.canvasWidth, this.canvasHeight);
+            this.clearCanvas(this.context, $(window).width(), $(window).height());
             this.clearInterface();
         } else {
             this.curDrawAction = action;

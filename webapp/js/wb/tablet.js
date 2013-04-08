@@ -1,7 +1,54 @@
 define([], function() {
 
+    var counter = 0;
+    function touchHandler(event)
+    {
+        if(counter < 20) {
+            counter++;
+            return;
+        } else {
+            counter = 0;
+        }
+        var touches = event.changedTouches,
+            first = touches[0],
+            type = "";
+             switch(event.type)
+        {
+            case "touchstart": type = "mousedown"; break;
+            case "touchmove":  type="mousemove"; break;        
+            case "touchend":   type="mouseup"; break;
+            case "touchcancel": type:"mouseup"; break;
+            default: return;
+        }
+
+                 //initMouseEvent(type, canBubble, cancelable, view, clickCount, 
+        //           screenX, screenY, clientX, clientY, ctrlKey, 
+        //           altKey, shiftKey, metaKey, button, relatedTarget);
+
+        var simulatedEvent = document.createEvent("MouseEvent");
+        simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+                                  first.screenX, first.screenY, 
+                                  first.clientX, first.clientY, false, 
+                                  false, false, false, 0/*left*/, null);
+
+        first.target.dispatchEvent(simulatedEvent);
+        event.preventDefault();
+    }
+
+    function init() 
+    {
+        document.addEventListener("touchstart", touchHandler, true);
+        document.addEventListener("touchmove", touchHandler, true);
+        document.addEventListener("touchend", touchHandler, true);
+        document.addEventListener("touchcancel", touchHandler, true);    
+    }
+
 
     function Tablet(color, windowWidth, windowHeight) {
+        windowWidth = windowWidth/2;
+        windowHeight = windowHeight/2;
+        init();
+        
         console.log('windowHeight: ' + windowHeight);
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
@@ -28,6 +75,22 @@ define([], function() {
                 x:left,
                 y:top
             };
+        }
+
+        this.receiveEvent = function(options) {
+            if(options.type==='start') {
+                console.log('start');
+                this.startPosition = this.getPosition();
+            } else {
+                var newLeft = this.startPosition.x - options.coords.x;
+                var newTop = this.startPosition.y - options.coords.y;
+                div.css({
+                    left:newLeft,
+                    top:newTop
+                });
+            }
+            console.log('receiveEvent');
+
         }
 
     }
