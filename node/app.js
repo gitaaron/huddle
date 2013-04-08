@@ -25,10 +25,13 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.send(JSON.stringify(msg));
     });
     socket.on('tablet_connect', function (data) {
-        console.log('tablet_connect : ' +JSON.stringify(data));
-
-        exports.socket = socket;
         if(screen) screen.emit('tablet_connect', data);
+        else console.log('no screen to tell');
+    });
+
+    socket.on('tablet_event', function(data) {
+        console.log('tablet_event : ' + data);
+        if(screen) screen.emit('tablet_event', data);
         else console.log('no screen to tell');
     });
 
