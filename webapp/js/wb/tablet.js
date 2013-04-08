@@ -50,7 +50,6 @@ define([], function() {
         windowHeight = windowHeight/2;
         init();
         
-        console.log('windowHeight: ' + windowHeight);
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         var div = $('<div></div>');
@@ -59,14 +58,17 @@ define([], function() {
             'width':windowWidth,
             'height':windowHeight,
             'position':'absolute',
-            'top':0,
+            'top':50,
             'left':150
         });
 
         $('body').append(div);
 
+        this.remove = function() {
+            div.remove();
+        }
+
         this.getPosition = function() {
-            console.log('getPos');
             var left = div.css('left');
             left = parseInt(left.substring(0, left.length-2));
             var top = div.css('top');

@@ -16,12 +16,10 @@ io.sockets.on('connection', function (socket) {
     console.log('client connected');
     buffer = [];
     socket.on('command', function(data) {
-        console.log('message');
         message = JSON.parse(data);
         var msg = { command: message };
         buffer.push(msg);
         if (buffer.length > 20) buffer.shift();
-        console.log('sending : ' + JSON.stringify(msg));
         socket.broadcast.send(JSON.stringify(msg));
     });
     socket.on('tablet_connect', function (data) {
@@ -30,14 +28,17 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('tablet_event', function(data) {
-        console.log('tablet_event : ' + data);
         if(screen) screen.emit('tablet_event', data);
         else console.log('no screen to tell');
     });
 
     socket.on('screen_connect', function(data) {
-        console.log('screen_connect');
         screen = socket;
+    });
+
+    socket.on('disconnect', function() {
+        if(screen) screen.emit('tablet_disconnect', {sessionid:socket.store.id});
+        else console.log('no screen to tell');
     });
 
 

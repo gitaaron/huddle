@@ -37,8 +37,14 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
         });
 
         socket.on('tablet_connect', function(obj) {
-            console.log('tablet_connect : ' + obj);
             self.tablets[obj.sessionid] = new tablet('green', obj.wW, obj.wH);
+        });
+
+        socket.on('tablet_disconnect', function(obj) {
+            if(self.tablets[obj.sessionid]) {
+                self.tablets[obj.sessionid].remove();
+                delete self.tablets[obj.sessionid];
+            }
         });
 
         socket.on('tablet_event', function(obj) {
@@ -58,7 +64,6 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
 
     Network.prototype.drawCommand = function(c) {
 	if(c) {
-            console.log('drawCommand :');
             c.w = this.canvasPainter.width;
             g_c = c;
                 if(c.p && c.p.length) {
@@ -126,14 +131,12 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
 
     Network.prototype.announceTabletConnect = function() {
         socket.on('connect', function() {
-            console.log('announce tablet connect');
             socket.emit('tablet_connect', {sessionid:socket.socket.sessionid, wW:$('.canvas').width(), wH:$('.canvas').height()});
         });
     }
     
     Network.prototype.announceScreenConnect = function() {
         socket.on('connect', function() {
-            console.log('announce screen connect');
             socket.emit('screen_connect', {sessionid:socket.socket.sessionid});
            
         });
