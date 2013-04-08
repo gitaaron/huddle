@@ -1,26 +1,9 @@
-# movable square
-    * create node project w/ socket.io (DONE)
-    * clicking screen on one browser tab does console log on other and vice versa (DONE)
-    * master/slave
-        -> slave sends master coordinates and master draws a box
-        -> slave can move box on master by clicking and dragging mouse
-        
-    * connect ipad and see how it works
-
-
-# whiteboard
-    * I draw a red line on one and it draws on the other screen
-
-
-# integrate
-    * when I connect I get a static non movable square
-    * I draw a red line on one and it draws on other screen within rectangle
-        -> square is same aspect ratio but different size
-        -> line must be translated
-    * make the square movable
-        -> have a toggle state button in bottom right
-            -> drawing state
-            -> square moving state
-
-        -> when going into square moving state I erase everything in background whiteboard
-        -> when moving rectangle I resend coordinates to master so it knows where to draw lines
+# next
+    -> full screen control and tap to enable/disable
+    -> zoom
+    -> show disconnected message on tablet
+    -> show connected message on desktop
+    -> when tablet disconnects remove square 
+    -> play background onto ipad for reference 
+    -> panning physics
+    -> offer way to clear whiteboard and it gets cleared everywhere
