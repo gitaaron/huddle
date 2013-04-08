@@ -1,3 +1,4 @@
+var g_options;
 define([], function() {
 
     var counter = 0;
@@ -77,19 +78,48 @@ define([], function() {
             };
         }
 
+        this.getWidth = function() {
+            return div.width();
+        }
+
+        this.getHeight = function() {
+            return div.height();
+        }
+
+        var   origWidth = div.width()
+            , origHeight = div.height();
+
+
+        var stroke = 5;
+
         this.receiveEvent = function(options) {
             if(options.type==='start') {
-                console.log('start');
+                origWidth = div.width();
+                origHeight = div.height();
                 this.startPosition = this.getPosition();
-            } else {
-                var newLeft = this.startPosition.x - options.coords.x;
-                var newTop = this.startPosition.y - options.coords.y;
+            } else if(options.type==='zoom') {
+                var lastWidth = div.width();
+                var lastHeight = div.height();
+                var width = origWidth * options.data.scale;
+                var height = origHeight * options.data.scale;
+                width = (width<30 || height < 30)?lastWidth:width;
+                height = (width<30 || height < 30)?lastHeight:height;
+                var newStroke = Math.ceil(width / 100);
+                if(newStroke!==stroke) {
+                    stroke = newStroke;
+                    $(document).trigger('set_line_width', {stroke:stroke});
+                }
+
+                div.css('width', width);
+                div.css('height', height);
+            } else  {
+                var newLeft = this.startPosition.x - options.data.coords.x;
+                var newTop = this.startPosition.y - options.data.coords.y;
                 div.css({
                     left:newLeft,
                     top:newTop
                 });
             }
-            console.log('receiveEvent');
 
         }
 

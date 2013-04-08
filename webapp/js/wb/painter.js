@@ -9,7 +9,6 @@
 
 	Additional Contributions by: Morris Johns
 ****************************************************************************************************/
-var g_context;
 define(['exports', 'wb/interaction', 'jquery'], function(exports, interaction, $) {
 
 
@@ -36,7 +35,6 @@ define(['exports', 'wb/interaction', 'jquery'], function(exports, interaction, $
         els = document.getElementsByClassName(canvasName);
         this.canvas = els[0]; 
         this.context = this.canvas.getContext('2d');
-        g_context = this.context;
 
         var els = document.getElementsByClassName(canvasInterfaceName);
         this.canvasInterface = els[0];
@@ -51,6 +49,11 @@ define(['exports', 'wb/interaction', 'jquery'], function(exports, interaction, $
         $(document).bind('clear_canvas', function() {
             self.clear();
         });
+
+        $(document).bind('set_line_width', function(e, data) {
+            self.setLineWidth(data.stroke);
+        });
+
         this.updateSize();
 
     }
@@ -139,6 +142,7 @@ define(['exports', 'wb/interaction', 'jquery'], function(exports, interaction, $
     }
 
     CanvasPainter.prototype.setLineWidth = function(width) {
+        console.log('setLineWidth : ' + width);
         this.context.lineWidth = width;
         this.contextI.lineWidth = width;
         this.lineWidth = width;

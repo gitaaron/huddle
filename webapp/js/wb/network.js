@@ -58,10 +58,13 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
 
     Network.prototype.drawCommand = function(c) {
 	if(c) {
+            console.log('drawCommand :');
+            c.w = this.canvasPainter.width;
+            g_c = c;
                 if(c.p && c.p.length) {
                     if(c.sessionid) {
                         var tablet = this.tablets[c.sessionid];
-		        var node = this.saveDrawing.scaleNode(c, {width:tablet.windowWidth,height:tablet.windowHeight});
+		        var node = this.saveDrawing.scaleNode(c, {width:tablet.getWidth(),height:tablet.getHeight()});
                         node = this.saveDrawing.translateNode(node, tablet.getPosition());
                     } else {
 		        var node = this.saveDrawing.scaleNode(c, {width:$(window).width(),height:$(window).height()});
@@ -136,8 +139,8 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
         });
     }
 
-    Network.prototype.tabletEvent = function(type, coords) {
-        socket.emit('tablet_event', {type:type, coords:coords, sessionid:socket.socket.sessionid});
+    Network.prototype.tabletEvent = function(type, data) {
+        socket.emit('tablet_event', {type:type, data:data, sessionid:socket.socket.sessionid});
     }
 
     

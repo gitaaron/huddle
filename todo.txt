@@ -1,5 +1,4 @@
 # next
-    -> full screen control and tap to enable/disable
     -> zoom
     -> show disconnected message on tablet
     -> show connected message on desktop
@@ -7,3 +6,7 @@
     -> play background onto ipad for reference 
     -> panning physics
     -> offer way to clear whiteboard and it gets cleared everywhere
+
+# done
+    -> full screen control and tap to enable/disable
+    -> see drawing beneat control square
