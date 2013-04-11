@@ -1,12 +1,28 @@
+# bugs
+    -> sending drawing while disconnected keeps drawing in buffer (does not send once connected)
+    -> drawing in small rect then drawing in larger rect increases stroke size of all drawings
+
 # next
-    -> zoom
+    -> icons for usability
     -> show disconnected message on tablet
     -> show connected message on desktop
     -> when tablet disconnects remove square 
     -> play background onto ipad for reference 
     -> panning physics
+    -> prevent box from going over bounds when panning / zooming
     -> offer way to clear whiteboard and it gets cleared everywhere
+
+
+# ideas
+    -> use it to make presentations
+    -> grids
+    -> zoom drawing on large screen
+    -> kinect integration
+    -> accelerometer to draw
 
 # done
     -> full screen control and tap to enable/disable
     -> see drawing beneat control square
+    -> zoom
+
+

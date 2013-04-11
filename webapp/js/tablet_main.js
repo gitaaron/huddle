@@ -17,7 +17,7 @@ require.config({
 
 });
 
-require(['jquery', 'wb/main', 'controller'], function($, wb_main, controller) {
+require(['jquery', 'wb/main', 'controller', 'chrome'], function($, wb_main, controller) {
 
     var wb = new wb_main('canvas', 'canvasInterface');
 

@@ -1,6 +1,7 @@
 <html>
     <head>
         <script type="text/javascript" src="libs/require.js" data-main="js/tablet_main.js"></script>
+        <link rel="stylesheet" href="css/main.css" type="text/css"></link>
     </head>
     <body>
         <style type="text/css">
@@ -38,12 +39,34 @@
                 background:white;
             }
 
+            #mover_background p {
+                margin:0px auto;
+                text-align:center;
+                margin-top:50px;
+            }
+
+            #toggler .pencil, #toggler .move {
+                font-size:4.4em;
+                border:thin solid red;
+                float:left;
+                margin:0px auto;
+                width:100%;
+                text-align:center;
+            }
+
 
         </style>
 
         <canvas class="canvas"></canvas>
         <canvas class="canvasInterface"></canvas>
-        <div id="controller" class="controller"></div>
-        <div id="toggler"></div>
+        <div id="controller" class="controller">
+            <div id="mover_background"  >
+ 	        <p class="glyphicons move" ><i></i></p>
+            </div> 
+        </div>
+        <div id="toggler">
+            <p class="glyphicons pencil"><i></i></p>
+ 	    <p style="display:none;" class="glyphicons move" ><i></i></p>
+        </div>
     </body>
 </html>

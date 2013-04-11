@@ -37,12 +37,17 @@ define(['jquery.drag'], function(drag) {
             var toggler = $('#toggler');
             toggler.bind('click', function() {
                 elem.toggle(); 
+                $('#toggler .glyphicons').hide();
                 if(elem.is(':visible')) {
                     console.log('toggler white');
                     toggler.css('background', 'white');
+                    $('#toggler .pencil').show();
+
                 } else {
                     console.log('toggler none');
                     toggler.css('background-color', 'rgba(0,0,0,0)');
+                    $('#toggler .move').show();
+
                 }
             });
 
