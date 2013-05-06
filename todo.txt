@@ -1,3 +1,6 @@
+1.  Create public link (hddle.com)
+
+
 # bugs
     -> sending drawing while disconnected keeps drawing in buffer (does not send once connected)
     -> drawing in small rect then drawing in larger rect increases stroke size of all drawings
@@ -19,10 +22,51 @@
     -> zoom drawing on large screen
     -> kinect integration
     -> accelerometer to draw
+    -> launch android intent to overlay transparent whiteboard onto anything android is displaying
+    -> make arrows light up when it starts going in a certain direction
+    -> boxes travels faster further you pull it one way
+    -> weatherman on top of drawing?
+    -> pointer?
 
 # done
     -> full screen control and tap to enable/disable
-    -> see drawing beneat control square
+    -> see drawing beneath control square
     -> zoom
 
 
+# from HCI course
+1.  Two people can draw on the same whiteboard from different devices.  It should be easy to share the whiteboard session with someone else to encourage bouncing of ideas.
+
+2.  The ability to draw on a tablet and project it on a large screen so that others can see it clearly.
+
+3.  The ability to draw on different areas of a large screen from a tablet so that they can draw accurately but also have a large drawing surface.  The drawable area is movable and resizable.
+
+4.  Ability to start a drawing session on a large screen rapidly.  Ideally I would just open my drawing application on my device and launch the large screen from there.
+
+5.  Ability to make a more formal presentation with a timeline from the drawing.
+
+6.  Use accelerometer to draw so that person becomes actor again in whiteboard experience.
+
+7.  Recognize when someone is drawing arrow and make the components connecting them draggable with the arrow as a connector always staying between them.
+
+8.  Recognize other symbols such as squares and circles to enclose something and grids / tables as a template.
+
+9.  Enable user to attach other things to the drawing such as images & websites.
+
+10.  Make it very simple to erase certain things from drawing.  Perhaps make it so they can clear the entire drawable area.
+
+11.  It should be easy to save the drawing for later use.
+
+12.  (Perhaps not part of this application) A template creator that enables someone to draw on top of a fitness plan / blueprints / table floor plans.
+
+13.  Show who is connected to make people feel like they are active participants in the brainstorming session.
+
+14.  Show when someone is drawing something (similar to showing that someone is typing something in instant messenger).
+
+15.  Make it possible to group objects then move and delete them.
+
+16.  People can add tags later to a drawing so that it can be easily retrieved by search instead of browsing.
+
+17.  Insert text.   It should be very easy to drag and resize the text.
+
+18.  People can add notes which are pieces of text that add commentary to the drawing but are not part of the drawing itself.
