@@ -3,7 +3,7 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
 
     var socket = io.connect();
     
-
+    var self;
     /*
      * Responsible for sending / receiving messages between client and otclib
      */
@@ -25,7 +25,17 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
         interaction.bindUp(this.mouseUpActionPerformed.bindAsEventListener(this));
         this.tablets = {};
 
-        var self = this;
+        self = this;
+        $(function() {
+            var ss = $('#sync_status');
+            var sm = 'Sync Manager Status : ';
+            socket.on('connect', function() { ss.html(sm + 'Connected'); setTimeout(self.clearSendingQueue, 2000)});
+            socket.on('disconnect', function() { ss.html(sm+ 'Disconnected... refreshing page in five seconds.'); setTimeout(tryReconnect, 10000)});
+            socket.on('reconnect', function() { ss.html(sm + 'Connected'); setTimeout('cp_self.clearSendingQueue()', 2000); });
+            socket.on('reconnecting', function() { ss.html(sm + 'Reconnecting...') });
+        });
+
+
         socket.on('message', function(obj) {
             obj = JSON.parse(obj);
             if('buffer' in obj) {
@@ -124,7 +134,7 @@ define(['exports', 'jquery', 'wb/interaction', 'socket.io', 'wb/tablet'], functi
     }
 
     Network.prototype.clearSendingQueue = function() {
-        while(this.queued_send_commands.length) {
+        while(self.queued_send_commands.length) {
             this.sendCommand(this.queued_send_commands.pop());
         }
     }
